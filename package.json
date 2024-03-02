@@ -1,14 +1,14 @@
 {
-  "name": "coelhojs",
-  "version": "1.0.0",
-  "description": "NodeJS Framework based on Express",
+  "name": "coelhojs-core",
+  "version": "1.0.1",
+  "description": "NodeJS Framework core based on Express",
   "main": "lib/CoelhoJs.js",
   "scripts": {
     "test": "snyk test"
   },
-  "git repository": "https://github.com/PCoelho06/coelhojs.git",
+  "git repository": "https://github.com/PCoelho06/coelhojs-core.git",
   "keywords": [],
-  "author": "Lapinou.tech",
+  "author": "Pierre Coelho",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
