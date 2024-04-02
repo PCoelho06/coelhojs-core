@@ -1,7 +1,7 @@
 {
   "name": "coelhojs-core",
-  "version": "1.0.4",
-  "description": "NodeJS Framework based on Express",
+  "version": "1.0.5",
+  "description": "NodeJS Framework core based on Express",
   "main": "lib/CoelhoJs.js",
   "scripts": {
     "test": "snyk test"
