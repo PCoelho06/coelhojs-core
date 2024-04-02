@@ -1,6 +1,6 @@
 {
   "name": "coelhojs-core",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "NodeJS Framework based on Express",
   "main": "lib/CoelhoJs.js",
   "scripts": {
