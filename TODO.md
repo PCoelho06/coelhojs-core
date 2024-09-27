@@ -1,7 +1,2 @@
-[ ] Create a boilerplate
-[ ] Test the boilerplate
-[ ] Finish the CLI
-[ ] Test the CLI inclusion
-[ ] Publish on npm
-
-load fixtures
+[ ] Ajouter un check si une BDD a été configurée
+[ ] Refonte de la configuration pour la BDD

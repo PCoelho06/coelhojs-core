@@ -1,14 +1,14 @@
 {
   "name": "coelhojs-core",
-  "version": "1.0.6",
-  "description": "NodeJS Framework core based on Express",
+  "version": "2.0.0",
+  "description": "NodeJS Framework core based on ExpressJS",
   "main": "lib/CoelhoJs.js",
   "scripts": {
     "test": "snyk test"
   },
   "git repository": "https://github.com/PCoelho06/coelhojs.git",
   "keywords": [],
-  "author": "Lapinou.tech",
+  "author": "PCoelho06",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -18,7 +18,6 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
-    "eta": "^3.2.0",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.3",
     "express-robots-txt": "^1.0.0",
