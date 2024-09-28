@@ -1,18 +1,21 @@
-const express = require("express");
-const fs = require("fs");
-const clc = require("cli-color");
+import express from "express";
+import fs from "fs";
+import clc from "cli-color";
+import { DataTypes } from "sequelize";
 
-const { Config } = require("./Config.js");
-const { loadRoutes, getRouter } = require("./Router.js");
-const { showWelcomeMessage } = require("./Utils.js");
-const { Database, DataTypes, Models, initDatabase } = require("./Database.js");
-const { Controller, Controllers, loadControllers } = require("./Controller.js");
-const { Services, loadServices } = require("./Services.js");
+import { Config } from "./Config.js";
+import { loadRoutes, getRouter } from "./Router.js";
+import { showWelcomeMessage } from "./Utils.js";
+import { Database, Models, initDatabase } from "./Database.js";
+import { Controller, Controllers, loadControllers } from "./Controller.js";
+import { Services, loadServices } from "./Services.js";
+import { initMiddlewares } from "./Middlewares.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 
 const app = express();
 const router = express.Router();
 
-class CoelhoJs {
+export class CoelhoJs {
   constructor() {
     fs.mkdir("./logs", { recursive: true }, (err) => {
       if (err) throw err;
@@ -46,15 +49,15 @@ class CoelhoJs {
     await loadServices();
     // await initDatabase();
     // await this.bootstrap();
-    await this.initMiddlewares(app);
+    await initMiddlewares(app);
     this.initRouter();
+    errorHandler();
     this.initHttpServer();
     showWelcomeMessage(clc);
   }
 }
 
 module.exports = {
-  CoelhoJs,
   Controller,
   Models,
   Controllers,

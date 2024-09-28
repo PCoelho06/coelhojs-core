@@ -1,9 +1,9 @@
-const { access } = require("fs");
-const { getFileNames } = require("./Utils");
+import { access } from "fs";
+import { getFileNames } from "./Utils.js";
 
-const Controllers = {};
+export const Controllers = {};
 
-class Controller {
+export class Controller {
   constructor(table, includes = null) {
     this.table = table;
     this.includes = includes;
@@ -91,7 +91,7 @@ class Controller {
   }
 }
 
-async function loadControllers() {
+export async function loadControllers() {
   access(process.cwd() + "/controllers", (err) => {
     if (err) {
       return;
@@ -108,5 +108,3 @@ async function loadControllers() {
     });
   });
 }
-
-module.exports = { Controller, Controllers, loadControllers };

@@ -1,11 +1,11 @@
-const { getFileNames } = require("./Utils");
-const { Controllers } = require("./Controller");
-const { Database } = require("./Database");
-const { loadRouteMiddlewares } = require("./Middlewares");
+import { getFileNames } from "./Utils.js";
+import { Controllers } from "./Controller.js";
+import { Database } from "./Database.js";
+import { loadRouteMiddlewares } from "./Middlewares.js";
 
-let Routes = {};
+export let Routes = {};
 
-async function loadRoutes() {
+export async function loadRoutes() {
   let routesString = "";
   getFileNames("routes").forEach((route) => {
     routesString +=
@@ -16,7 +16,7 @@ async function loadRoutes() {
   Routes = JSON.parse("{" + routesString.slice(0, -1) + "}");
 }
 
-async function getRouter(app, router) {
+export async function getRouter(app, router) {
   for (const route in Routes) {
     //Fetch all routes
     const routeDatas = route.split(" ");
@@ -89,5 +89,3 @@ async function getRouter(app, router) {
     }
   }
 }
-
-module.exports = { Routes, loadRoutes, getRouter };

@@ -1,19 +1,17 @@
-const fs = require("fs");
+import { readFileSync } from "fs";
 
 const rootDir = process.cwd();
 
-let Config = {};
+export let Config = {};
 
 function readConfig() {
   try {
-    Config = require(process.cwd() + "/.config.js");
+    Config = require(rootDir + "/.config.js");
 
-    let ConfigShared = require(process.cwd() + "/.shared.config.js");
+    let ConfigShared = require(rootDir + "/.shared.config.js");
     mergeDeep(Config, ConfigShared);
 
-    Config.package = JSON.parse(
-      fs.readFileSync(process.cwd() + "/package.json")
-    );
+    Config.package = JSON.parse(readFileSync(rootDir + "/package.json"));
   } catch (error) {}
 }
 
@@ -40,5 +38,3 @@ function mergeDeep(target, ...sources) {
 }
 
 readConfig();
-
-module.exports = { Config };

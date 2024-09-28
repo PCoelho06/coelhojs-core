@@ -1,0 +1,10 @@
+{
+    "presets": [
+      ["@babel/preset-env", {
+        "targets": {
+          "node": "current"  // transpile le code pour la version actuelle de Node.js
+        }
+      }]
+    ]
+  }
+  

@@ -1,9 +1,9 @@
-const { access } = require("fs");
-const { getFileNames } = require("./Utils");
+import { access } from "fs";
+import { getFileNames } from "./Utils.js";
 
-const Services = {};
+export const Services = {};
 
-async function loadServices() {
+export async function loadServices() {
   access(process.cwd() + "/services", (error) => {
     if (error) {
       return;
@@ -17,5 +17,3 @@ async function loadServices() {
     });
   });
 }
-
-module.exports = { Services, loadServices };

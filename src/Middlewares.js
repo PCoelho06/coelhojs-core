@@ -1,16 +1,16 @@
-const path = require("path");
-const cors = require("cors");
-const fileUpload = require("express-fileupload");
-const helmet = require("helmet");
-const compression = require("compression");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const robots = require("express-robots-txt");
-const morgan = require("morgan");
+import path from "path";
+import cors from "cors";
+import fileUpload from "express-fileupload";
+import helmet from "helmet";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import robots from "express-robots-txt";
+import morgan from "morgan";
 
 const rootDir = process.cwd();
 
-function loadRouteMiddlewares(middlewaresArray) {
+export function loadRouteMiddlewares(middlewaresArray) {
   const routeMiddlewares = [];
   middlewaresArray.forEach((middleware) => {
     if (middleware.includes("(")) {
@@ -35,7 +35,7 @@ async function loadMiddlewares() {
   });
 }
 
-async function initMiddlewares(app) {
+export async function initMiddlewares(app) {
   await loadMiddlewares();
 
   app.use(
@@ -71,5 +71,3 @@ async function initMiddlewares(app) {
   app.use(express.static(rootDir + Config.middlewares.static));
   app.use(robots(Config.middlewares.robots));
 }
-
-module.exports = { loadRouteMiddlewares, initMiddlewares };
