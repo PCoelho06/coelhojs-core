@@ -1,4 +1,5 @@
 import express from "express";
+import { createServer } from "http";
 import fs from "fs";
 import clc from "cli-color";
 import { DataTypes } from "sequelize";
@@ -14,6 +15,7 @@ import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 
 const app = express();
 const router = express.Router();
+const httpServer = createServer(app);
 
 export class CoelhoJs {
   constructor() {
@@ -38,7 +40,7 @@ export class CoelhoJs {
   }
 
   initHttpServer() {
-    app.listen(Config.app.port, function () {
+    httpServer.listen(Config.app.port, function () {
       console.log(
         "\nYou can now access you're app on http://localhost:" + Config.app.port
       );
