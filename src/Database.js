@@ -1,26 +1,28 @@
 import { Sequelize } from "sequelize";
 import { Config } from "./Config.js";
-import { getFileNames } from "./Utils.js";
+import {
+  getFileNames,
+  getModelPath,
+  getFilePath,
+  capitalize,
+} from "./Utils.js";
 
 export const Models = {};
 
 export const Database = new Sequelize(
-  Config.db.database.name,
-  Config.db.database.username,
-  Config.db.database.password,
+  Config.database.database,
+  Config.database.username,
+  Config.database.password,
   {
-    host: Config.db.database.options.host,
-    dialect: Config.db.database.options.dialect,
-    logging: Boolean(Config.db.database.options.logging),
+    host: Config.database.options.host,
+    dialect: Config.database.options.dialect,
+    logging: Boolean(Config.database.options.logging),
   }
 );
 
 function loadModels() {
   getFileNames("models").forEach((model) => {
-    Models[capitalize(model)] = require(process.cwd() +
-      "/models/" +
-      model +
-      ".model.js");
+    Models[capitalize(model)] = require(getModelPath(model));
   });
 }
 
@@ -35,6 +37,10 @@ const defineAssociations = (associations) => {
         source.hasMany(target, options);
         target.belongsTo(source, options);
         break;
+      case "ManyToOne":
+        source.belongsTo(target, options);
+        target.hasMany(source, options);
+        break;
       case "ManyToMany":
         source.belongsToMany(target, { through: options.through, ...options });
         target.belongsToMany(source, { through: options.through, ...options });
@@ -46,12 +52,11 @@ const defineAssociations = (associations) => {
 };
 
 export async function initDatabase() {
-  const associations = require(process.cwd() + "/models/associations.js");
+  const { associations } = require(getFilePath("models", "associations.js"));
   try {
     loadModels();
-    // setAssociations();
-    defineAssociations();
-    await database.sync();
+    defineAssociations(associations);
+    await Database.sync();
     console.log("Database initiated and synchronized");
   } catch (error) {
     console.error("Unable to connect to the database:", error);

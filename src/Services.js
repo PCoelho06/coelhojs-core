@@ -1,5 +1,5 @@
 import { access } from "fs";
-import { getFileNames } from "./Utils.js";
+import { getFileNames, getServicePath } from "./Utils.js";
 
 export const Services = {};
 
@@ -9,10 +9,7 @@ export async function loadServices() {
       return;
     }
     getFileNames("services").forEach((service) => {
-      const serviceClass = require(process.cwd() +
-        "/services/" +
-        service +
-        ".service.js");
+      const serviceClass = require(getServicePath(service));
       Services[capitalize(service)] = new serviceClass[capitalize(service)]();
     });
   });

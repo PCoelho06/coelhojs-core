@@ -1,3 +1,5 @@
+import path from "path";
+
 import { readdirSync } from "fs";
 
 export function capitalize(word) {
@@ -16,6 +18,38 @@ export function getFileNames(folder) {
     }
   });
   return fileNames;
+}
+
+export function getProjectRoot() {
+  return process.cwd();
+}
+
+export function getFilePath(folder, fileName) {
+  return path.join(getProjectRoot(), folder, fileName);
+}
+
+export function getFolderPath(folder) {
+  return path.join(getProjectRoot(), folder);
+}
+
+export function getModelPath(model) {
+  return getFilePath("models", model + ".model.js");
+}
+
+export function getControllerPath(controller) {
+  return getFilePath("controllers", controller + ".controller.js");
+}
+
+export function getMiddlewarePath(middleware) {
+  return getFilePath("middlewares", middleware + ".middleware.js");
+}
+
+export function getRoutePath(route) {
+  return getFilePath("routes", route + ".route.js");
+}
+
+export function getServicePath(service) {
+  return getFilePath("services", service + ".service.js");
 }
 
 export function showWelcomeMessage(clc) {

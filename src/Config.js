@@ -1,17 +1,19 @@
 import { readFileSync } from "fs";
 
-const rootDir = process.cwd();
+import { getProjectRoot } from "./Utils.js";
 
 export let Config = {};
 
 function readConfig() {
   try {
-    Config = require(rootDir + "/.config.js");
+    Config = require(getProjectRoot() + "/.config.js");
 
-    let ConfigShared = require(rootDir + "/.shared.config.js");
+    let ConfigShared = require(getProjectRoot() + "/.shared.config.js");
     mergeDeep(Config, ConfigShared);
 
-    Config.package = JSON.parse(readFileSync(rootDir + "/package.json"));
+    Config.package = JSON.parse(
+      readFileSync(getProjectRoot() + "/package.json")
+    );
   } catch (error) {}
 }
 

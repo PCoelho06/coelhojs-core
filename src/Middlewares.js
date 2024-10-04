@@ -1,3 +1,5 @@
+import express from "express";
+import fs from "fs";
 import path from "path";
 import cors from "cors";
 import fileUpload from "express-fileupload";
@@ -8,7 +10,17 @@ import bodyParser from "body-parser";
 import robots from "express-robots-txt";
 import morgan from "morgan";
 
-const rootDir = process.cwd();
+import { getMiddlewarePath, getFileNames } from "./Utils";
+import { Config } from "./Config";
+
+// const rootDir = process.cwd();
+
+fs.mkdir("./logs", { recursive: true }, (err) => {
+  if (err) throw err;
+});
+let accessLogStream = fs.createWriteStream("./logs/access.log", {
+  flags: "a",
+});
 
 export function loadRouteMiddlewares(middlewaresArray) {
   const routeMiddlewares = [];
@@ -28,10 +40,7 @@ export function loadRouteMiddlewares(middlewaresArray) {
 
 async function loadMiddlewares() {
   getFileNames("middlewares").forEach((middleware) => {
-    middlewares[middleware] = require(process.cwd() +
-      "/middlewares/" +
-      middleware +
-      ".middleware.js");
+    middlewares[middleware] = require(getMiddlewarePath(middleware));
   });
 }
 
@@ -42,7 +51,7 @@ export async function initMiddlewares(app) {
     morgan(
       "[:date[clf]] :method :url :status :res[content-length] - :response-time ms",
       {
-        stream: this.accessLogStream,
+        stream: accessLogStream,
       }
     )
   );
@@ -68,6 +77,6 @@ export async function initMiddlewares(app) {
       Config.middlewares.cookieParser.options
     )
   );
-  app.use(express.static(rootDir + Config.middlewares.static));
+  // app.use(express.static(rootDir + Config.middlewares.static));
   app.use(robots(Config.middlewares.robots));
 }
