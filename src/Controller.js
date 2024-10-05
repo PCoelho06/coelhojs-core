@@ -9,7 +9,6 @@ export class Controller {
   }
 
   async findExec(where = null) {
-    console.log(this.table);
     return await this.table.findAll({
       where: where,
       include: this.includes,
@@ -58,10 +57,6 @@ export class Controller {
     }
 
     const results = await this.findExec(where);
-
-    if (this instanceof AbstractController) {
-      return { data: results };
-    }
 
     res.json({ data: results });
   }

@@ -5,7 +5,6 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import helmet from "helmet";
 import compression from "compression";
-import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import robots from "express-robots-txt";
 import morgan from "morgan";
@@ -71,12 +70,6 @@ export async function initMiddlewares(app) {
   app.use(compression(Config.middlewares.compression));
   app.use(express.json({ limit: Config.app.jsonLimit }));
   app.use(express.urlencoded({ limit: Config.app.jsonLimit, extended: true }));
-  app.use(
-    cookieParser(
-      Config.middlewares.cookieParser.secret,
-      Config.middlewares.cookieParser.options
-    )
-  );
   // app.use(express.static(rootDir + Config.middlewares.static));
   app.use(robots(Config.middlewares.robots));
 }

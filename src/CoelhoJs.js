@@ -6,7 +6,7 @@ import { DataTypes } from "sequelize";
 import { Config } from "./Config.js";
 import { getRouter } from "./Router.js";
 import { showWelcomeMessage } from "./Utils.js";
-import { Database, Models, initDatabase, syncDatabase } from "./Database.js";
+import { sequelize, Models, initDatabase, syncDatabase } from "./Database.js";
 import { Controller, Controllers, loadControllers } from "./Controller.js";
 import { Services, loadServices } from "./Services.js";
 import { initMiddlewares } from "./Middlewares.js";
@@ -15,10 +15,9 @@ const app = express();
 const router = express.Router();
 const httpServer = createServer(app);
 
-export class CoelhoJs {
+class CoelhoJs {
   async initRouter() {
     await loadControllers();
-    console.log("🚀 ~ CoelhoJs ~ initRouter ~ Controllers:", Controllers);
     await getRouter(app, router, Controllers);
 
     app.use("", router);
@@ -52,11 +51,12 @@ export class CoelhoJs {
 }
 
 export {
+  CoelhoJs,
   Controller,
   Models,
   Controllers,
   Services,
-  Database,
+  sequelize,
   DataTypes,
   Config,
   syncDatabase,

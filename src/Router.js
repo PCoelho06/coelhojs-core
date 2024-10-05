@@ -1,6 +1,6 @@
 import { getFileNames, getRoutePath } from "./Utils.js";
 import { Controllers } from "./Controller.js";
-import { Database } from "./Database.js";
+import { sequelize } from "./Database.js";
 import { loadRouteMiddlewares } from "./Middlewares.js";
 
 export let Routes = {};
@@ -74,7 +74,7 @@ export async function getRouter(app, router) {
           break;
         case "API":
           router.get(path, (req, res) => {
-            controller.find(req, res, Database.Sequelize.Op);
+            controller.find(req, res, sequelize.Sequelize.Op);
           });
           router.post(path, (req, res) => {
             controller.create(req, res);

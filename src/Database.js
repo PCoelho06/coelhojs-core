@@ -9,14 +9,14 @@ import {
 
 export const Models = {};
 
-export const Database = new Sequelize(
-  Config.database.database,
-  Config.database.username,
-  Config.database.password,
+export const sequelize = new Sequelize(
+  Config.sequelize.database,
+  Config.sequelize.username,
+  Config.sequelize.password,
   {
-    host: Config.database.options.host,
-    dialect: Config.database.options.dialect,
-    logging: Boolean(Config.database.options.logging),
+    host: Config.sequelize.options.host,
+    dialect: Config.sequelize.options.dialect,
+    logging: Boolean(Config.sequelize.options.logging),
   }
 );
 
@@ -52,11 +52,11 @@ const defineAssociations = (associations) => {
 };
 
 export async function initDatabase() {
-  const { associations } = require(getFilePath("models", "associations.js"));
   try {
     loadModels();
+    const { associations } = require(getFilePath("models", "associations.js"));
     defineAssociations(associations);
-    await Database.sync();
+    await sequelize.sync();
     console.log("Database initiated and synchronized");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
