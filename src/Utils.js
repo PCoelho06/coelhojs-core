@@ -1,6 +1,7 @@
 import path from "path";
 
 import { readdirSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 
 export function capitalize(word) {
   if (typeof word !== "string") return "";
@@ -10,6 +11,10 @@ export function capitalize(word) {
 export function getFileNames(folder) {
   const fileNames = [];
   const extension = "." + folder.substring(0, folder.length - 1) + ".js";
+  if (!existsSync("./" + folder)) {
+    mkdirSync("./" + folder);
+    return fileNames;
+  }
   const files = readdirSync("./" + folder);
   files.forEach((file) => {
     if (file.includes(extension)) {

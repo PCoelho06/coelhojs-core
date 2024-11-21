@@ -6,17 +6,18 @@ import {
   getFilePath,
   capitalize,
 } from "./Utils.js";
+import fs from "fs";
 
 export const Models = {};
 
 export const sequelize = new Sequelize(
-  Config.sequelize.database,
-  Config.sequelize.username,
-  Config.sequelize.password,
+  Config.db.sequelize.database,
+  Config.db.sequelize.username,
+  Config.db.sequelize.password,
   {
-    host: Config.sequelize.options.host,
-    dialect: Config.sequelize.options.dialect,
-    logging: Boolean(Config.sequelize.options.logging),
+    host: Config.db.sequelize.options.host,
+    dialect: Config.db.sequelize.options.dialect,
+    logging: Boolean(Config.db.sequelize.options.logging),
   }
 );
 
@@ -54,8 +55,17 @@ const defineAssociations = (associations) => {
 export async function initDatabase() {
   try {
     loadModels();
-    const { associations } = require(getFilePath("models", "associations.js"));
-    defineAssociations(associations);
+    const associationsPath = getFilePath("models", "associations.js");
+
+    if (!fs.existsSync(associationsPath)) {
+      fs.writeFileSync(
+        associationsPath,
+        "module.exports = { associations: [] };"
+      );
+    } else {
+      const { associations } = require(associationsPath);
+      defineAssociations(associations);
+    }
     await sequelize.sync();
     console.log("Database initiated and synchronized");
   } catch (error) {

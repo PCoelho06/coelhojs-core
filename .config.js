@@ -7,12 +7,14 @@ module.exports = {
     websocketport: 0, // 0 to disable
     severhost: "http://localhost:" + port,
   },
-  sequelize: {
-    database: "coelhojs",
-    username: "root",
-    options: {
-      host: "localhost",
-      dialect: "mysql",
+  db: {
+    sequelize: {
+      database: "coelhojs",
+      username: "root",
+      options: {
+        host: "localhost",
+        dialect: "mysql",
+      },
     },
   },
 };
